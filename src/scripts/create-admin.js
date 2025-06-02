@@ -20,13 +20,14 @@ const createFirstAdmin = async () => {
     // Create the first admin user
     const adminData = {
       username: "dern_admin",
-      email: "sadiridinovotabek@gmail.com", // Change this to your email
+      email: "jafarbekkhudoyorov@gmail.com", // Change this to your email
       passwordHash: "admin123", // Change this password
       role: "admin",
       accountType: "business",
-      phone: "+998332985051",
-      address: "Dern Support HQ, London, UK",
-      isActive: true
+      phone: "+998993243777",
+      address: "Dern Support HQ, New York, USA",
+      isActive: true, 
+      companyName: "Dern Support"
     }
 
     const adminUser = new User(adminData)

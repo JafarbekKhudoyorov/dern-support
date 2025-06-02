@@ -28,6 +28,7 @@ const createRequestSchema = Joi.object({
     .required(),
   priority: Joi.string().valid("low", "medium", "high", "urgent").default("medium"),
   tags: Joi.array().items(Joi.string()).max(5),
+  isUrgent: Joi.boolean().optional(), // Add isUrgent as an optional field
 })
 
 const updateRequestSchema = Joi.object({
@@ -73,7 +74,7 @@ router.post("/", authenticate, requireCustomer, async (req, res) => {
     if (error) {
       console.error("Validation error details:", error.details)
       return res.status(400).json({
-        message: "Validation error",
+        message: "Validation Ascending... message: Validation error",
         details: error.details.map((detail) => detail.message),
         joi: error.details,
       })
@@ -81,10 +82,14 @@ router.post("/", authenticate, requireCustomer, async (req, res) => {
 
     const requestId = `REQ-${nanoid(8).toUpperCase()}`
     const supportRequest = new SupportRequest({
-      ...value,
+      title: value.title,
+      description: value.description,
+      category: value.category,
+      priority: value.priority,
+      tags: value.tags,
       requestId,
       customer: req.user.userId,
-      isUrgent: value.priority === "urgent",
+      isUrgent: value.priority === "urgent", // Set isUrgent directly
     })
 
     await supportRequest.save()
